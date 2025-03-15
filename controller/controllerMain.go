@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"irptb/handler"
 	"log"
 
@@ -33,12 +34,13 @@ func StartService() {
 			continue
 		}
 
-		input := update.Message.Text
+		userInput := update.Message.Text
 		var replyText string
 
 		// Validate the input.
-		if handler.PackageSourceValidator(input) {
+		if handler.PackageSourceValidator(userInput) {
 			replyText = "✅ کد رهگیری مرسوله دریافت شد و در حال برسی وضعیت میباشد.\n تا لحضاتی دیگر مشخصات بسته برای شما ارسال میشود"
+			checkPackageStatus(userInput)
 		} else {
 			replyText = "❌ کد رهگیری مرسوله اشتباه است یا به صورت نادرستی وارد شده است. \nدقت شود که کد رهگیری مرسوله ۲۴ رقم میباشد\n"
 		}
@@ -50,4 +52,7 @@ func StartService() {
 			log.Printf("Failed to send message: %v", err)
 		}
 	}
+}
+func checkPackageStatus(orderSourceNumber string) {
+	fmt.Println("this is my suer input from bot :", orderSourceNumber)
 }
